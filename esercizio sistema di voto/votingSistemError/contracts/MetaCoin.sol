@@ -9,10 +9,11 @@ import "./ConvertLib.sol";
 // token, see: https://github.com/ConsenSys/Tokens. Cheers!
 
 contract MetaCoin {
-	mapping (address => uint) numerodiVoti;
+	mapping (address => address []) numerodiVoti;
+
 	mapping (address => bool) votoIndividuale;
 	
-	address [] listaCandidati;
+	//address [] listaCandidati;
 	//event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
 	constructor() public {
@@ -25,19 +26,42 @@ contract MetaCoin {
 		//insieme dei candidati
 
 
-		numerodiVoti[0x5D05744b8D57c70251DB4a87df17D08de64f5Dd6]=0;
-		numerodiVoti[0x6ab74e04bd4e7477Ab23D6d96208A9350076e972]=0;
+		numerodiVoti[0x5D05744b8D57c70251DB4a87df17D08de64f5Dd6];
+		numerodiVoti[0x6ab74e04bd4e7477Ab23D6d96208A9350076e972];
 
 	}
 
 	function vota(address candidato) public returns(bool sufficient) {
 		if (votoIndividuale[msg.sender]){
-			numerodiVoti[candidato] += 1;
+			numerodiVoti[candidato].push(candidato);
 			votoIndividuale[msg.sender]=false;
 			return true;
 		}
 		return false;
 	}
+
+
+	function togliVoto(address candidato) public returns(bool sufficient) {
+		uint256 len=numerodiVoti[candidato].length;
+		if (votoIndividuale[msg.sender]== false ){
+			for (uint256 i=0;i<len;i++ ){
+				if (numerodiVoti[candidato][i] == msg.sender ){
+					delete numerodiVoti[candidato][i];
+					votoIndividuale[msg.sender]=true;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
+
+	function getNumeroVoti(address candindato) public view returns(uint256){
+
+		return numerodiVoti[candindato].length;
+	}
+
 
 
 /*    
@@ -55,11 +79,12 @@ contract MetaCoin {
 	}
 */
 
-
+/*
 	function getNumeroVoti(address candindato) public view returns(uint){
 		return numerodiVoti[candindato];
 	}
 
+*/
 /*
 	function sendCoin(address receiver, uint amount) public returns(bool sufficient) {
 		if (balances[msg.sender] < amount) return false;

@@ -1,0 +1,6 @@
+
+truffle console
+let instance = await MetaCoin.deployed()
+instance.vota("0x5D05744b8D57c70251DB4a87df17D08de64f5Dd6",{from:"0x0B64888c070d306d89002e1e478c93e0fC84e1a2"})
+vot = await instance.getNumeroVoti("0x5D05744b8D57c70251DB4a87df17D08de64f5Dd6")
+
