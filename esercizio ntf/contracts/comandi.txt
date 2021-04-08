@@ -1,0 +1,9 @@
+let x = await NTF.deployed()
+x.mint("aaa",{from:"0x0a578aCd9291A13440ec02F0dD0C67673003A9AC"})
+x.setForSale(1,30000000000000000000,{from:"0x0a578aCd9291A13440ec02F0dD0C67673003A9AC"})
+
+await x.ownerOf(1);
+await x.getApproved(1);
+
+x.setForSale(1,"30000000000000000000",{from:"0x0a578aCd9291A13440ec02F0dD0C67673003A9AC"})
+x.buy(1,{from:"0xe3FEf91d6daA4fd73ceE4a60132a5C25d8ED056d",value:40000000000000000000})

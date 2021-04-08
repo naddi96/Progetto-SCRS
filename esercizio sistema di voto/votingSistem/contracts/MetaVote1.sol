@@ -18,15 +18,15 @@ contract MetaVote1 {
 	constructor() public {
 
 		//insieme dei votanti
-		votoIndividuale[0xC5237E5A1D76776fbd990f8c07B30D45A831EC90]=true;
-		votoIndividuale[0x013E185Fd114c18bE59F0B3d4D5bF28950472563]=true;
-		votoIndividuale[0x93400A85883011B71469c0a78241CEB6aa5Df266]=true;
+		votoIndividuale[0xDC42098bB91898eC2f419857C916cC78C23301dA]=true;
+		votoIndividuale[0x0a578aCd9291A13440ec02F0dD0C67673003A9AC]=true;
+		votoIndividuale[0xC4CA1e4BCceb3BAaea373F1a2EE5eC2939c75EF2]=true;
 
 		//insieme dei candidati
 
 
 		numerodiVoti[0x9317cf52eD55E11d18C7e2D2DD375bE87B241685]=0;
-		numerodiVoti[0x6aF99dF5D4F4d283E89967f2ed613e6736B3B7f6]=0;
+		numerodiVoti[0xe3FEf91d6daA4fd73ceE4a60132a5C25d8ED056d]=0;
 
 	}
 
