@@ -21,17 +21,41 @@ contract NTF is ERC721{
     //"OperaHub" è il nome che rappresenta l'insieme dei token del contratto
     constructor() ERC721("opera","OperaHub") public{}
 
-//GETTER:
-//del prezzo di un token
-function getPrezzo(uint256 _tokenId) view public returns (uint256){
-    return prezzo[_tokenId];
-}
+
 
 //numero di token
 function numberOfTokens()  view public returns (uint256){
     return _tokenIds.current();
 }
 
+//GETTER:
+//del prezzo di un token
+function getPrezzo(uint256 _tokenId) view public returns (uint256){
+    return prezzo[_tokenId];
+}
+
+
+function getIdfromHash(string memory hashh)view external returns(  uint256){
+    return hashToId[hashh];
+}
+
+function getHashfromId(uint256 id)view external returns( string memory){
+    return idToHash[id];
+}
+
+
+
+function changePrice(uint256 idtoken,uint256 costo) external {
+    require(prezzo[idtoken]>0,"CALL FIRST SETFORSALE");
+    require(msg.sender == ownerOf(idtoken),"NOT THE OWNER");
+    prezzo[idtoken]=costo;
+
+}
+
+function removeFromSale(uint256 idtoken) external{
+    require(msg.sender == ownerOf(idtoken),"NOT THE OWNER");
+    prezzo[idtoken]=0;
+}
 
 // funzione che prende in input token e il suo costo in Wei e lo mette in vendita
 function setForSale(uint256 _tokenId,uint256 costo) external{
@@ -43,47 +67,51 @@ function setForSale(uint256 _tokenId,uint256 costo) external{
     prezzo[_tokenId]=costo;
     //esegue l'approval della chiave del contratto, permettendo a quest ultimo
     //di accedere ai token ed effettuare modifiche
-    approve(address(this), _tokenId);
-    //emit Approval(owner, address(this), _tokenId);
     }
 
 
 //Funzione che effettua lo scambio tra il token e il prezzo in Wei
-    function buy(uint256 _tokenId) external  payable {
-        address buyer = msg.sender;
-        uint256 payedPrice = msg.value;
-        //proprietario del token
-        address ownerA =ownerOf(_tokenId);
-        //payable permette all'owner del token di ricevere i token dal buyer
-        address payable owner= payable(ownerA);
-        require(prezzo[_tokenId]>0,"OPERA NON IN VENDITA.");
-        require(getApproved(_tokenId) == address(this),"INDIRIZZO CONTRATTO NON APPROVATO.");
-        require(payedPrice >= prezzo[_tokenId],"NON HAI I SORDI, SEI N PORACCIO.");
-        //effettua la transazione in Wei
-        owner.transfer(prezzo[_tokenId]);
-        //cambia il proprietario del token
-        _transfer(owner,buyer,_tokenId);
-        //venduto il token, viene rimosso dagli oggetti in vendita
-        prezzo[_tokenId]=0;
+function buy(uint256 _tokenId) external  payable {
+    address buyer = msg.sender;
+    uint256 payedPrice = msg.value;
+    //proprietario del token
+    address ownerA =ownerOf(_tokenId);
+    //payable permette all'owner del token di ricevere i token dal buyer
+    address payable owner= payable(ownerA);
+    require(prezzo[_tokenId]>0,"OPERA NON IN VENDITA.");
+    require(payedPrice >= prezzo[_tokenId],"NON HAI I SORDI, SEI N PORACCIO.");
+    //effettua la transazione in Wei
+    owner.transfer(prezzo[_tokenId]);
+    //cambia il proprietario del token
+    _transfer(owner,buyer,_tokenId);
+    //venduto il token, viene rimosso dagli oggetti in vendita
+    prezzo[_tokenId]=0;
 }
+
+
+
+
 
 //funzione per la creazione di un nuovo token, associando il proprietario
 //alla chiave pubblica del chiamante della funzione
-    function mint(string memory hashh) public{
-        _tokenIds.increment();
-        //crea l'id per il nuovo token
-        uint256 newItemId = _tokenIds.current();
+function mint(string memory hashh) public{
+    _tokenIds.increment();
+    //crea l'id per il nuovo token
+    uint256 newItemId = _tokenIds.current();
 
 
 //controllo hash duplicati
-        //require(compare(idToHash[newItemId],""),"hash gia esistente");
-        require(hashToId[hashh]==0,"hash gia esistente");
+    //require(compare(idToHash[newItemId],""),"hash gia esistente");
+    require(hashToId[hashh]==0,"hash gia esistente");
 
 //funzione che crea il nuovo token
-        _mint(msg.sender, newItemId);
-        idToHash[newItemId]=hashh;
-        hashToId[hashh]=newItemId;
-    }
+    _mint(msg.sender, newItemId);
+    idToHash[newItemId]=hashh;
+    hashToId[hashh]=newItemId;
+}
+
+
+
 
 
 
