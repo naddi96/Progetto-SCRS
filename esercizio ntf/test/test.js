@@ -1,13 +1,13 @@
 
 const truffleAssert = require('truffle-assertions');
-const ntf = artifacts.require('./NTF.sol')
+const nft = artifacts.require('./NFT.sol')
 
 
-contract('NTF', (accounts) => {
+contract('NFT', (accounts) => {
     let contract
   
     before(async () => {
-      contract = await ntf.deployed()
+      contract = await nft.deployed()
     })
 
 

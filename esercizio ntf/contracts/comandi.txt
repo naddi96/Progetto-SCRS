@@ -1,4 +1,4 @@
-let x = await NTF.deployed()
+let x = await NFT.deployed()
 await x.mint("aaa",{from:"0x0a578aCd9291A13440ec02F0dD0C67673003A9AC"})
 
 await x.ownerOf(1);
