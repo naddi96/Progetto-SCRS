@@ -123,11 +123,16 @@ const wallet = await buildWallet(Wallets, walletPath);
 			console.log('*** Result: committed');
 			console.log(`*** Result: ${result.toString()}`);
 */
-			
+		/*	
 			console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger');
-			var result = await contract.submitTransaction('CreateVettura', "5", "blue", 5, "1",-1,300);
+			var result = await contract.submitTransaction('CreateVettura', "6", "blue", 5, "1",-1,300);
 			console.log('*** Result: committed');
 			console.log(`*** Result: ${result.toString()}`);
+
+			
+		*/
+			
+
 
 	
 			console.log('\n--> Evaluate Transaction: GetAllOwner,');
@@ -140,8 +145,35 @@ const wallet = await buildWallet(Wallets, walletPath);
 
 
 			console.log('\n--> Evaluate Transaction: AssetExists');
-			result = await contract.evaluateTransaction('AssetExists',"1");
+			result = await contract.evaluateTransaction('AssetExists',"persona","1");
 			console.log(`*** Result: ${(result.toString())}`);
+
+			console.log('\n--> Evaluate Transaction: ReadAuto');
+			result = await contract.evaluateTransaction('ReadAuto',"2");
+			console.log(`*** Result: ${(result.toString())}`);
+
+			console.log('\n--> Evaluate Transaction: ReadAssetOwner');
+			result = await contract.evaluateTransaction('ReadAssetOwner',"1");
+			console.log(`*** Result: ${(result.toString())}`);
+
+			
+
+
+			console.log(`AAAAAAAAAAAAAAAAAAAAAAAAAAAAA`);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 			console.log('\n--> Evaluate Transaction: ReadAuto');
 			result = await contract.evaluateTransaction('ReadAuto',"4");
@@ -169,11 +201,26 @@ const wallet = await buildWallet(Wallets, walletPath);
 			console.log(`*** Result: ${(result.toString())}`);
 			
 			console.log('\n--> Evaluate Transaction: ReadAssetOwner');
-			result = await contract.evaluateTransaction('ReadAssetOwner',"1");
+			result = await contract.evaluateTransaction('ReadAssetOwner',"3");
+			console.log(`*** Result: ${(result.toString())}`);
+
+		
+
+			console.log('\n--> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaEvaluate Transaction: ReadAuto');
+			result = await contract.evaluateTransaction('ReadAuto',"4");
+			console.log(`*** Result: ${(result.toString())}`);
+			console.log('\n--> UpdateAssetVettura asset');
+			result = await contract.evaluateTransaction('UpdateAssetVettura',
+			"4", "blue", 11,"3", 30, 1 );
+			console.log(`*** Result: ${(result.toString())}`);
+	
+			console.log('\n--> Evaluate Transaction: ReadAuto');
+			result = await contract.evaluateTransaction('ReadAuto',"4");
 			console.log(`*** Result: ${(result.toString())}`);
 
 
-			/*
+
+/*
 			// Let's try a query type operation (function).
 			// This will be sent to just one peer and the results will be shown.
 			console.log('\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger');
